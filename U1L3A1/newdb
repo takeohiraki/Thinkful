@@ -1,0 +1,92 @@
+-- .header on
+-- .mode col
+-- .tables
+-- .schemas
+
+----------------------------------------------------------------------
+-- Create a new database
+
+-- sqlite3 getting_started.db
+
+----------------------------------------------------------------------
+-- Create a new table and populate with data
+
+
+-- CREATE TABLE cities (name text, state text);
+-- INSERT INTO cities (name, state) VALUES
+--     ('New York City', 'NY'),
+--     ('Boston', 'MA'),
+--     ('Chicago', 'IL'),
+--     ('Miami', 'FL'),
+--     ('Dallas', 'TX'),
+--     ('Seattle', 'WA'),
+--     ('Portland', 'OR'),
+--     ('San Francisco', 'CA'),
+--     ('Los Angeles', 'CA');
+
+
+
+-- CREATE TABLE weather (City text, Year integer, Warm_month text, Cold_month text, Average_high integer);
+-- INSERT INTO weather (City, Year, Warm_month, Cold_month, Average_high) VALUES
+--   	('New York City', '2013', 'July', 'January', '62'),
+-- 	('Boston', '2013', 'July', 'January', '59'),
+--   	('Chicago', '2013', 'July', 'January', '59'),
+--   	('Miami', '2013', 'August', 'January', '84'),
+--   	('Dallas', '2013', 'July', 'January', '77'),
+--   	('Seattle', '2013', 'July', 'January', '61'),
+--   	('Portland', '2013', 'July', 'December', '63'),
+--   	('San Francisco', '2013', 'July', 'December', '64'),
+--   	('Los Angeles', '2013', 'September', 'December', '75');
+  
+  
+----------------------------------------------------------------------
+-- Exercises for pulling data
+
+  -- SELECT * FROM weather
+  -- WHERE City = 'Boston';
+  
+-- Counts the number of rows
+-- SELECT COUNT(*) FROM weather;
+
+
+-- SELECT City FROM weather
+-- WHERE Warm_month = 'July' AND Cold_month != 'January';
+
+
+-- SELECT City FROM weather
+-- WHERE Cold_month = 'January'
+-- LIMIT 2;
+
+
+----------------------------------------------------------------------
+-- Updating a table
+
+-- UPDATE cities SET state='Californ-I-A' WHERE state='CA';
+
+-- UPDATE cities SET state='CA' WHERE state='Californ-I-A';
+
+---------- Deletes all rows of the table ---------
+-- DELETE FROM cities;
+
+----------------------------------------------------------------------
+---------- Export to CSV ---------
+-- .mode csv      			--Important, or else will not be in different columns if imported later
+-- .headers on
+-- .output cities.csv      --starts recording for the csv
+-- select * from cities;   --tells what to insert into the csv
+-- .output stdout
+
+
+----------------------------------------------------------------------
+---------- Import from CSV ---------
+create table cities_copy (name text, state text);
+.separator ","
+.import cities.csv cities_copy
+
+
+
+
+
+
+
+
