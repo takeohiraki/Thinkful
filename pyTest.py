@@ -392,12 +392,141 @@
 
 ##### Pandas #####
 
+# import pandas as pd
+
+# input_dataframe = pd.read_csv('lecz-urban-rural-population-land-area-estimates-v2-csv/lecz-urban-rural-population-land-area-estimates_continent-90m.csv')
+
+# # input_dataframe['Continent']
+# input_dataframe[0:10]
+
+# ----------------------------------------------------------------------
+# L3;P2 - pySQlite fetching
+
+
+# # The sqlite3 module is used to work with the SQLite database.
+# import sqlite3 as lite
+
+# # Here you connect to the database. The `connect()` method returns a connection object.
+# con = lite.connect('getting_started.db')
+
+# with con:
+#   # From the connection, you get a cursor object. The cursor is what goes over the records that result from a query.
+#   cur = con.cursor()    
+#   cur.execute('SELECT SQLITE_VERSION()')
+#   # You're fetching the data from the cursor object. Because you're only fetching one record, you'll use the `fetchone()` method. If fetching more than one record, use the `fetchall()` method.
+#   data = cur.fetchone()
+#   # Finally, print the result.
+#   print "SQLite version: %s" % data
+
+
+# execute() can execute any SQLite commands that you want
+# fetchone() or fetchall() can fetch results and store as an object
+
+
+# ----------------------------------------------------------------------
+# L3;P2 - pySQlite inserting data
+
+
+##### in SQLite #####
+# CREATE TABLE newWeather AS
+# SELECT City, Year, Warm_month, Cold_month FROM weather;
+
+
+
+# import sqlite3 as lite
+
+# con = lite.connect('getting_started.db')
+
+# # Inserting rows by passing values directly to `execute()`
+# with con:
+
+#     cur = con.cursor()
+#     cur.execute("INSERT INTO cities VALUES('Washington', 'DC')")
+#     cur.execute("INSERT INTO cities VALUES('Houston', 'TX')")
+#     cur.execute("INSERT INTO newWeather VALUES('Washington', 2013, 'July', 'January')")
+#     cur.execute("INSERT INTO newWeather VALUES('Houston', 2013, 'July', 'January')")
+
+# ----------------------------------------------------------------------
+# L3;P2 - pySQlite inserting data as tuples
+
+
+# import sqlite3 as lite
+
+# cities = (('Las Vegas', 'NV'),
+#                     ('Atlanta', 'GA'))
+
+# newWeather = (('Las Vegas', 2013, 'July', 'December'),
+#                      ('Atlanta', 2013, 'July', 'January'))
+
+# con = lite.connect('getting_started.db')
+
+# # Inserting rows by passing tuples to `execute()`
+# with con:
+
+#     cur = con.cursor()
+#     cur.executemany("INSERT INTO cities VALUES(?,?)", cities)
+#     cur.executemany("INSERT INTO newWeather VALUES(?,?,?,?)", newWeather)
+
+
+# ----------------------------------------------------------------------
+# L3;P2 - pySQlite retrieving data
+
+# import sqlite3 as lite
+
+# con = lite.connect('getting_started.db')
+
+# with con:    
+
+#     cur = con.cursor()    
+#     cur.execute("SELECT * FROM cities")
+
+#     rows = cur.fetchall()
+
+#     for row in rows:
+#         print row
+
+
+##### Import as a dataframe using pandas #####
+
+# import sqlite3 as lite
+# import pandas as pd
+
+# con = lite.connect('getting_started.db')
+
+# # Select all rows and print the result set one row at a time
+# with con:
+
+#   cur = con.cursor()
+#   cur.execute("SELECT * FROM cities")
+
+#   rows = cur.fetchall()
+#   df = pd.DataFrame(rows)
+
+
+
+import sqlite3 as lite
 import pandas as pd
 
-input_dataframe = pd.read_csv('lecz-urban-rural-population-land-area-estimates-v2-csv/lecz-urban-rural-population-land-area-estimates_continent-90m.csv')
+con = lite.connect('getting_started.db')
 
-# input_dataframe['Continent']
-input_dataframe[0:10]
+# Select all rows and print the result set one row at a time
+with con:
+
+  cur = con.cursor()
+  cur.execute("SELECT * FROM cities")
+
+
+  rows = cur.fetchall()
+  cols = [desc[0] for desc in cur.description]  # retrieves column names
+  df = pd.DataFrame(rows, columns=cols)
+
+# retrieve by calling eh variables df/rows/cols
+
+
+
+
+
+
 
 
 
